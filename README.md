@@ -24,7 +24,7 @@ Once an item is picked, you can drop it in any room if you want. If a monster is
 Your project is to implement this game. Here are a few requirements that need to be implemented. 
 
 *	The game should start by stating the story in two or three lines. This story should be present in a file called Start.txt.
-*	The user should input all moves as text commands. Valid commands are MOVE, PICK, DROP, EXIT, ATTACK, LOOK, LOAD and SAVE.
+*	The user should input all moves as text commands. Valid commands are MOVE, PICK, DROP, EXIT, ATTACK, LOOK
 *	The MOVE command should take the direction in which the user wants to move as the second parameter. The directions can be NORTH, SOUTH, EAST or WEST. For example, on entering the MOVE EAST command in room 1, the user should move to the room 2. 
 *	If there is a wall on the side, a message should be displayed telling the user that the move is not possible. For example, MOVE EAST is an invalid command. 
 *	Whenever the user moves to the new room, a one line description of the room should be displayed. The description of all the rooms should be present in a file called Rooms.txt which should be read at the beginning of the program and stored in memory. 
