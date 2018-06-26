@@ -2,6 +2,9 @@
 
 A text based game made as a final project for the course "Computer Programing CS103"
 
+## How to Run
+Add the .txt files and the .cpp file in a new project in Microsoft Visual Studio and then build the project and run it.
+
 ## Game Description
 *(This is purely a work of fiction and any resemblance to an actual person or monster is purely coincidental.)*
 
