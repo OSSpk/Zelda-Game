@@ -3,7 +3,7 @@
 A text based game made as a final project for the course "Computer Programing CS103"
 
 ## How to Run
-Add the .txt files and the .cpp file in a new project in Microsoft Visual Studio and then build the project and run it.
+Just run Zelda.exe. If it doesnt work, then add the .txt files and the .cpp file in a new project (console application) in Microsoft Visual Studio and then build the project and run it.
 
 ## Game Description
 *(This is purely a work of fiction and any resemblance to an actual person or monster is purely coincidental.)*
@@ -19,6 +19,9 @@ There are treasure-items scattered throughout the castle for the financially inc
 Once an item is picked, you can drop it in any room if you want. If a monster is attacked without the weapon that he can be killed with in your bag, you’ll die. If you get out of the castle without freeing the princess, you’ll lose the game.
 
 ![](../master/images/i.png)
+
+## Interface
+![interface](../master/images/interface.png)
 
 ## Project Requirements
 Your project is to implement this game. Here are a few requirements that need to be implemented. 
