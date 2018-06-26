@@ -1,0 +1,8 @@
+The princess of the kingdom of CPeria "Princess Zelda"
+has been captured by an evil wizard and placed in a castle guarded by monsters.
+Your job is to set her free and bring her back outside the castle.
+There are 9 rooms in the castle and one exit to it . Rooms have treasure and weapons too.
+So do you have the potential to destroy the monsters and save Princess Zelda ?
+Are you ready ?
+Lets do it !!
+
