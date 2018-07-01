@@ -1,6 +1,6 @@
 # Zelda-Game
 
-A text based game made as a final project for the course "Computer Programing CS103"
+A text based game made as a final project for the course "Computer Programing CS103" during my 2nd Semester at [National University of Computer and Emerging Sciences](http://nu.edu.pk/).
 
 ## How to Run
 Just run Zelda.exe. If it doesnt work, then add the .txt files and the .cpp file in a new project (console application) in Microsoft Visual Studio and then build the project and run it.
