@@ -46,3 +46,13 @@ Your project is to implement this game. Here are a few requirements that need to
 *	If the user exits the castle after rescuing the princess, the text in a file called EndWin.txt should be displayed and the game should end. 
 *	If the user exits the castle without rescuing the princess, the text in a file called EndLose.txt should be displayed and the game should end. 
 
+## Contact
+You can get in touch with me on my LinkedIn Profile: [Haris Muneer](https://www.linkedin.com/in/harismuneer/)
+
+## Issues
+If you face any issue, you can create a new issue in the Issues Tab and I will be glad to help you out.
+
+## License
+[MIT](../master/LICENSE)
+Copyright (c) 2018-present, harismuneer
+
