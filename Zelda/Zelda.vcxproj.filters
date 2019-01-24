@@ -27,4 +27,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="EndDead.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="EndLose.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="EndWin.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="Rooms.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="Start.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>
