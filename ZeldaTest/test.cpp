@@ -202,3 +202,48 @@ TEST(CastleLinking, LinkRoom5and8) {
 
 	delete castle;
 }
+
+TEST(CastleLinking, LinkRoom6and9) {
+	Castle* castle = new Castle();
+
+	// Check that the rooms are not currently linked
+	Room* room6Paths = castle->getRoom(6)->getPaths()[1];
+	Room* room9Paths = castle->getRoom(9)->getPaths()[0];
+
+	EXPECT_EQ(room6Paths, nullptr);
+	EXPECT_EQ(room9Paths, nullptr);
+
+	// Link the rooms
+	castle->LinkRoom6and9();
+
+	// Test that they were successfully linked
+	room6Paths = castle->getRoom(6)->getPaths()[1];
+	room9Paths = castle->getRoom(9)->getPaths()[0];
+
+	EXPECT_EQ(room6Paths, castle->getRoom(9));
+	EXPECT_EQ(room9Paths, castle->getRoom(6));
+
+	delete castle;
+}
+
+TEST(CastleGetSet, roomNumbers) {
+	Castle* castle = new Castle();
+
+	castle->setNumbersofRooms();
+
+	for (int ii = 1; ii < 10; ++ii) {
+		EXPECT_EQ(castle->getRoom(ii)->getRoomNumber(), ii);
+	}
+	
+	delete castle;
+}
+
+TEST(CastleLinking, LinkRoomsWithOtherThings) {
+	Castle* castle = new Castle();
+
+	castle->LinkRoomsWithOtherThings(nullptr, nullptr, nullptr);
+
+	EXPECT_EQ(castle->getRoom(1)->getPaths()[2], castle->getRoom(2));
+
+	delete castle;
+}
