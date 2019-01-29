@@ -70,11 +70,11 @@ TEST(PlayerAttackMechanic,PlayerAttackWithWeaponAndMonster) {
   playa->Pick("paradox");
 
   room->setMonsterPresent(dummy);
-  EXPECT_TRUE(dummy->getLivingState);
+  EXPECT_TRUE(dummy->getLivingState());
   EXPECT_TRUE(playa->getCurrentState());
   EXPECT_TRUE(playa->Attack("Steve's mom"));
   EXPECT_TRUE(playa->getCurrentState());
-  EXPECT_FALSE(dummy->getLivingState);
+  EXPECT_FALSE(dummy->getLivingState());
 
   delete dummyWeapon;
   delete dummy;
@@ -101,7 +101,7 @@ TEST(PlayerAttackMechanic,PlayerAttackTwiceWithWeaponAndMonster) {
   EXPECT_FALSE(dummy->getLivingState());
   EXPECT_FALSE(playa->Attack("Steve's mom"));
   EXPECT_FALSE(dummy->getLivingState());
-  
+
   delete dummyWeapon;
   delete dummy;
   delete playa;
