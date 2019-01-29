@@ -247,3 +247,152 @@ TEST(CastleLinking, LinkRoomsWithOtherThings) {
 
 	delete castle;
 }
+
+//---------------------Treasure------------------------
+
+TEST(TreasureCreation, StandardCase) {
+	Treasure* treasure = new Treasure("The Holy Grail", 62);
+
+	EXPECT_STREQ("The Holy Grail", treasure->getItemName());
+	EXPECT_EQ(62, treasure->getWorth());
+
+	delete treasure;
+}
+
+TEST(TreasureCreation, LongName) {
+	Treasure* treasure = new Treasure("The Holy Grail is a really great thing to have perhaps we should go on a long quest for it and make the best movie in the world about said quest", 0);
+
+	EXPECT_STREQ("The Holy Grail is a really great thing to have perhaps we should go on a long quest for it and make the best movie in the world about said quest", treasure->getItemName());
+
+	delete treasure;
+}
+
+TEST(TreasureCreation, AllCaps) {
+	Treasure* treasure = new Treasure("THE HOLY GRAIL", 0);
+
+	EXPECT_STREQ("THE HOLY GRAIL", treasure->getItemName());
+
+	delete treasure;
+}
+
+TEST(TreasureCreation, MixedCases) {
+	Treasure* treasure = new Treasure("ThE HoLy GrAiL", 0);
+
+	EXPECT_STREQ("ThE HoLy GrAiL", treasure->getItemName());
+
+	delete treasure;
+}
+
+TEST(TreasureCreation, SpecialCharacters) {
+	Treasure* treasure = new Treasure("\n\t\0", 0);
+
+	EXPECT_STREQ("\n\t\0", treasure->getItemName());
+
+	delete treasure;
+}
+
+TEST(TreasureCreation, NoInput) {
+	Treasure* treasure = new Treasure("", 0);
+
+	EXPECT_STREQ("", treasure->getItemName());
+
+	delete treasure;
+}
+
+TEST(TreasureCreation, WhiteSpace) {
+	Treasure* treasure = new Treasure("		", 0);
+
+	EXPECT_STREQ("	", treasure->getItemName());
+
+	delete treasure;
+}
+
+TEST(TreasureCreation, ZeroWorth) {
+	Treasure* treasure = new Treasure("The Holy Grail", 0);
+
+	EXPECT_EQ(0, treasure->getWorth());
+
+	delete treasure;
+}
+
+TEST(TreasureCreation, NegativeWorth) {
+	Treasure* treasure = new Treasure("The Holy Grail", -1);
+
+	EXPECT_EQ(-1, treasure->getWorth());
+
+	delete treasure;
+}
+
+TEST(TreasureCreation, HugeWorth) {
+	Treasure* treasure = new Treasure("The Holy Grail", 10000000);
+
+	EXPECT_EQ(10000000, treasure->getWorth());
+
+	delete treasure;
+}
+
+TEST(TreasureCreation, FractionalWorth) {
+	Treasure* treasure = new Treasure("The Holy Grail", 0.5);
+
+	EXPECT_EQ(0.5, treasure->getWorth());
+
+	delete treasure;
+}
+
+//---------------------Weapon------------------------
+
+TEST(WeaponCreation, StandardCase) {
+	Weapon* weapon = new Weapon("Gurthang");
+
+	EXPECT_STREQ("Gurthang", weapon->getItemName());
+
+	delete weapon;
+}
+
+TEST(WeaponCreation, AllCaps) {
+	Weapon* weapon = new Weapon("A DUCK");
+
+	EXPECT_STREQ("A DUCK", weapon->getItemName());
+
+	delete weapon;
+}
+
+TEST(WeaponCreation, LongName) {
+	Weapon* weapon = new Weapon("How do you know she is a witch? She looks like one! Bring her forward. I'm not a witch. I'm not a witch. But you are dressed as one. They dressed me up like this. No, no we didn't -- no. And this isn't my nose, it's a false one.");
+
+	EXPECT_STREQ("How do you know she is a witch? She looks like one! Bring her forward. I'm not a witch. I'm not a witch. But you are dressed as one. They dressed me up like this. No, no we didn't -- no. And this isn't my nose, it's a false one.", weapon->getItemName());
+
+	delete weapon;
+}
+
+TEST(WeaponCreation, MixedCases) {
+	Weapon* weapon = new Weapon("a duCK");
+
+	EXPECT_STREQ("a duCK", weapon->getItemName());
+
+	delete weapon;
+}
+
+TEST(WeaponCreation, NoInput) {
+	Weapon* weapon = new Weapon("");
+
+	EXPECT_STREQ("", weapon->getItemName());
+
+	delete weapon;
+}
+
+TEST(WeaponCreation, WhiteSpace) {
+	Weapon* weapon = new Weapon("	");
+
+	EXPECT_STREQ("	", weapon->getItemName());
+
+	delete weapon;
+}
+
+TEST(WeaponCreation, SpecialCharacters) {
+	Weapon* weapon = new Weapon("\n\t\0");
+
+	EXPECT_STREQ("\n\t\0", weapon->getItemName());
+
+	delete weapon;
+}
