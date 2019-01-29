@@ -111,7 +111,6 @@ TEST(PlayerAttackMechanic,PlayerAttackTwiceWithWeaponAndMonster) {
 */
 TEST(PlayerAttackMechanic,PlayerAttackWithNoWeaponAndMonster) {
   Room * room = new Room();
-  Weapon * dummyWeapon = new Weapon("paradox");
   Player * playa = new Player("Steve", room );
   Monster * dummy = new Monster("Steve's mom",dummyWeapon);
 
@@ -124,7 +123,6 @@ TEST(PlayerAttackMechanic,PlayerAttackWithNoWeaponAndMonster) {
   EXPECT_TRUE(dummy->getLivingState());
   EXPECT_FALSE(playa->getCurrentState());
 
-  delete dummyWeapon;
   delete dummy;
   delete playa;
   delete room;
@@ -133,16 +131,12 @@ TEST(PlayerAttackMechanic,PlayerAttackWithNoWeaponAndMonster) {
 */
 TEST(PlayerAttackMechanic, PlayerAttackWithNoWeaponAndNoMonster) {
 	Room * room = new Room();
-	Weapon * dummyWeapon = new Weapon("paradox");
 	Player * playa = new Player("Steve", room);
-	Monster * dummy = new Monster("Steve's mom", dummyWeapon);
 
 	EXPECT_TRUE(playa->getCurrentState());
 	EXPECT_FALSE(playa->Attack("Steve's mom"));
 	EXPECT_TRUE(playa->getCurrentState());
 
-	delete dummyWeapon;
-	delete dummy;
 	delete playa;
 	delete room;
 }
