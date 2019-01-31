@@ -50,7 +50,7 @@ TEST(PlayerAttackMechanic, TypoPlayerAttackWithWeaponAndMonster) {
 	EXPECT_TRUE(playa->getCurrentState());
 	EXPECT_FALSE(playa->Attack("Stacy's mom"));
 	EXPECT_TRUE(playa->getCurrentState());
-	EXPECT_TRUE(dummy->getLivingState);
+	EXPECT_TRUE(dummy->getLivingState());
 
 	delete dummyWeapon;
 	delete dummy;
@@ -112,6 +112,8 @@ TEST(PlayerAttackMechanic,PlayerAttackTwiceWithWeaponAndMonster) {
 TEST(PlayerAttackMechanic,PlayerAttackWithNoWeaponAndMonster) {
   Room * room = new Room();
   Player * playa = new Player("Steve", room );
+  Weapon * dummyWeapon = new Weapon("paradox");
+
   Monster * dummy = new Monster("Steve's mom",dummyWeapon);
 
   room->setMonsterPresent(dummy);
@@ -139,4 +141,54 @@ TEST(PlayerAttackMechanic, PlayerAttackWithNoWeaponAndNoMonster) {
 
 	delete playa;
 	delete room;
+}
+
+
+TEST(PlayerItemFeatures,PlayerPickUpTooMany){
+
+	char buffer[50];
+  Room * room = new Room();
+  Room * room2 = new Room();
+  Player * playa = new Player("Steve", room);
+  Treasure* stuff[10];
+  bool f = false;
+  room->setNorth(room2);
+  Weapon * dummyWeapon = new Weapon("paradox");
+  Treasure * dummyTreasure = new Treasure("Flashlight", 50);
+  Treasure * dummyTreasure1 = new Treasure("Torch", 5000);
+  Treasure * dummyTreasure2 = new Treasure("Pile of Poo",5000);
+  for(int i=0;i<10;i++){
+	  sprintf(buffer, "thing%i", i);
+    stuff[i]=new Treasure(buffer,1000);
+    room2->setItemsPresent(i,stuff[i]);
+  }
+  room->setItemsPresent(0,dummyWeapon);
+  room->setItemsPresent(1,dummyTreasure);
+  room->setItemsPresent(2,dummyTreasure1);
+  room->setItemsPresent(3,dummyTreasure2);
+
+  playa->Pick("paradox");
+  playa->Pick("Flashlight");
+  playa->Pick("Torch");
+  playa->Pick("Pile of Poo");
+
+  playa->Move("NORTH",f);
+  for(int i=0;i<10;i++){
+	  sprintf(buffer, "thing%i", i);
+    playa->Pick(buffer);
+  }
+
+  EXPECT_NE(15050, playa->getCash()); // this means they picked up all 7 items
+
+
+  for(int i=0;i<5;i++){
+    delete stuff[i];
+  }
+  delete dummyWeapon;
+  delete dummyTreasure;
+  delete dummyTreasure1;
+  delete dummyTreasure2;
+  delete room;
+  delete room2;
+  delete playa;
 }
