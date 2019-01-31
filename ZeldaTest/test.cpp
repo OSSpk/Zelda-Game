@@ -247,3 +247,59 @@ TEST(CastleLinking, LinkRoomsWithOtherThings) {
 
 	delete castle;
 }
+
+//---------------------Monster------------------------
+TEST(MonsterConstructor, ConstructorWithParameter) {
+	Weapon* weapon = new Weapon("weapon");
+	Monster* monster = new Monster("monster", weapon);
+	EXPECT_STREQ("monster", monster->getMonsterName());
+	EXPECT_STREQ("weapon", monster->getKillingWeapon()->getItemName());
+	EXPECT_EQ(true, monster->getLivingState());
+	delete monster;
+	delete weapon;
+}
+
+TEST(MonsterConstructor, ConstructorWithoutParameter) {
+	Monster* monster = new Monster();
+	EXPECT_EQ(nullptr, monster->getMonsterName());
+	EXPECT_EQ(nullptr, monster->getKillingWeapon());
+	EXPECT_EQ(true, monster->getLivingState());
+	delete monster;
+}
+
+TEST(MonsterGetterSetter,WeaponGetSet) {
+	Weapon* weapon = new Weapon("weapon");
+	Monster* monster = new Monster();
+	monster->setKillingWeapon(weapon);
+	EXPECT_STREQ("weapon", monster->getKillingWeapon()->getItemName());
+	delete monster;
+	delete weapon;
+}
+
+TEST(MonsterGetterSetter, LivingGetSet) {
+	Monster* monster = new Monster();
+	monster->setLivingState(false);
+	EXPECT_EQ(false, monster->getLivingState());
+	delete monster;
+}
+
+TEST(MonsterGetterSetter, NameGetSet) {
+	Monster* monster = new Monster("monster", nullptr);
+	//monster has not setter for name
+	EXPECT_STREQ("monster",monster->getMonsterName());
+	delete monster;
+}
+
+//---------------------Princess------------------------
+TEST(PrincessConstructor, Constructor) {
+	Princess* princess=new Princess();
+	EXPECT_EQ(true,princess->getLivingState());
+}
+
+TEST(PrincessGetSet, LivingState) {
+	Princess* princess=new Princess();
+	princess->setLivingState(false);
+	EXPECT_EQ(false,princess->getLivingState());
+}
+
+
