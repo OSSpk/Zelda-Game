@@ -295,14 +295,14 @@ TEST(MonsterGetterSetter, NameGetSet) {
 TEST(PrincessConstructor, Constructor) {
 	Princess* princess=new Princess();
 	EXPECT_EQ(true,princess->getLivingState());
-  delete princess;
+	delete princess;
 }
 
 TEST(PrincessGetSet, LivingState) {
 	Princess* princess=new Princess();
 	princess->setLivingState(false);
 	EXPECT_EQ(false,princess->getLivingState());
-  delete princess
+	delete princess;
 }
 
 
