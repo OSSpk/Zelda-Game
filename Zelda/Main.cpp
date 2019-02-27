@@ -1,12 +1,10 @@
 #include "pch.h"
+#include "./test.cpp"
 #include <windows.h>
-#include "Zelda.h"
-
 int main()
 {
-	Game* zelda = new Game;
-	zelda->Play();
-	delete zelda;
+	Game game = new Game();
+	game->Play();
 
 	system("PAUSE");
 	return 0;

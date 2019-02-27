@@ -48,11 +48,39 @@ TEST(PlayerAttackMechanic, TypoPlayerAttackWithWeaponAndMonster) {
 
 	room->setMonsterPresent(dummy);
 	EXPECT_TRUE(playa->getCurrentState());
-	EXPECT_FALSE(playa->Attack("Stacy's mom"));
+	EXPECT_FALSE(playa->Attack("Stacy's mom")); // here we specify an incorrect string
 	EXPECT_TRUE(playa->getCurrentState());
 	EXPECT_TRUE(dummy->getLivingState());
 
 	delete dummyWeapon;
+	delete dummy;
+	delete playa;
+	delete room;
+}
+
+/*Attack function sent incorrect weapon,
+should result in a failed attack, resulting in death of the player*/
+TEST(PlayerAttackMechanic,WrongWeaponAttack) {
+	Room * room = new Room();
+	Weapon * realWeapon = new Weapon("rocket launcher");
+	Weapon * dummyWeapon = new Weapon("NERF blaster");
+	Player * playa = new Player("Steve", room);
+	Monster * dummy = new Monster("Cyclops", realWeapon);
+
+	room->setItemsPresent(0, dummyWeapon);
+	room->setItemsPresent(1, realWeapon);
+
+	playa->Pick("NERF blaster");
+
+
+	room->setMonsterPresent(dummy);
+	EXPECT_TRUE(playa->getCurrentState());
+	EXPECT_FALSE(playa->Attack("Cyclops")); // we dont have correct weapon, should die
+	EXPECT_FALSE(playa->getCurrentState());
+	EXPECT_TRUE(dummy->getLivingState());
+
+	delete dummyWeapon;
+	delete realWeapon;
 	delete dummy;
 	delete playa;
 	delete room;
@@ -107,6 +135,7 @@ TEST(PlayerAttackMechanic,PlayerAttackTwiceWithWeaponAndMonster) {
   delete playa;
   delete room;
 }
+
 /*Attacking monster without a weapon, should die
 */
 TEST(PlayerAttackMechanic,PlayerAttackWithNoWeaponAndMonster) {
@@ -143,25 +172,48 @@ TEST(PlayerAttackMechanic, PlayerAttackWithNoWeaponAndNoMonster) {
 	delete room;
 }
 
+/*
 
+*/
 TEST(PlayerItemFeatures,PlayerPickUpTooMany){
 
+	const int numTreasure = 15;
 	char buffer[50];
   Room * room = new Room();
   Room * room2 = new Room();
+  Room * room3 = new Room();
+  Room * room4 = new Room();
+
   Player * playa = new Player("Steve", room);
-  Treasure* stuff[10];
+  Treasure* stuff[numTreasure];
   bool f = false;
+
   room->setNorth(room2);
+  room2->setNorth(room3);
+  room3->setNorth(room4);
+
   Weapon * dummyWeapon = new Weapon("paradox");
   Treasure * dummyTreasure = new Treasure("Flashlight", 50);
   Treasure * dummyTreasure1 = new Treasure("Torch", 5000);
   Treasure * dummyTreasure2 = new Treasure("Pile of Poo",5000);
-  for(int i=0;i<10;i++){
+
+  for(int i=0;i< numTreasure;i++){
 	  sprintf(buffer, "thing%i", i);
     stuff[i]=new Treasure(buffer,1000);
+  }
+  for(int i=0;i<5;i++){
+  	sprintf(buffer, "thing%i", i);
     room2->setItemsPresent(i,stuff[i]);
   }
+  for(int i=0;i<5;i++){
+  	sprintf(buffer, "thing%i", i+5);
+    room3->setItemsPresent(i,stuff[i+5]);
+  }
+  for (int i = 0; i < 5; i++) {
+	  sprintf(buffer, "thing%i", i + 10);
+	  room4->setItemsPresent(i, stuff[i+10]);
+  }
+
   room->setItemsPresent(0,dummyWeapon);
   room->setItemsPresent(1,dummyTreasure);
   room->setItemsPresent(2,dummyTreasure1);
@@ -173,15 +225,23 @@ TEST(PlayerItemFeatures,PlayerPickUpTooMany){
   playa->Pick("Pile of Poo");
 
   playa->Move("NORTH",f);
-  for(int i=0;i<10;i++){
-	  sprintf(buffer, "thing%i", i);
-    playa->Pick(buffer);
-  }
-
-  EXPECT_NE(15050, playa->getCash()); // this means they picked up all 7 items
-
-
   for(int i=0;i<5;i++){
+	  sprintf(buffer, "thing%i", i);
+      playa->Pick(buffer);
+
+  }
+  playa->Move("NORTH",f);
+  for(int i=0;i<5;i++){
+	  sprintf(buffer, "thing%i", i+5);
+      playa->Pick(buffer);
+
+  }
+  playa->Move("NORTH", f);
+  EXPECT_EQ(16050, playa->getCash());
+  EXPECT_NE(20050, playa->getCash()); // this means they picked up all 7 items
+ // playa->Look();
+
+  for(int i=0;i< numTreasure;i++){
     delete stuff[i];
   }
   delete dummyWeapon;
@@ -190,5 +250,7 @@ TEST(PlayerItemFeatures,PlayerPickUpTooMany){
   delete dummyTreasure2;
   delete room;
   delete room2;
+  delete room3;
+  delete room4;
   delete playa;
 }
