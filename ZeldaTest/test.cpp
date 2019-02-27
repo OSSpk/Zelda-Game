@@ -1,11 +1,6 @@
 #include "pch.h"
 #include "../Zelda/Zelda.cpp"
 
-TEST(TestCaseName, TestName) {
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
-}
-
 //---------------------Player------------------------
 
 
@@ -254,3 +249,31 @@ TEST(PlayerItemFeatures,PlayerPickUpTooMany){
   delete room4;
   delete playa;
 }
+
+
+TEST(HelperFunctions,caseTest){
+
+  char letters[50];
+  memset(letters,'\0',50);
+
+
+  strcpy(letters,"abcdEF");
+  HelperFunctions::charactersCase(letters);
+  EXPECT_STREQ(letters,"ABCDEF\0");
+
+  strcpy(letters,"ABCDEF");
+  HelperFunctions::charactersCase(letters);
+  EXPECT_STREQ(letters,"ABCDEF\0");
+
+  strcpy(letters,"abc0ef");
+
+  HelperFunctions::charactersCase(letters);
+  EXPECT_STREQ(letters,"ABC0EF\0");
+
+  strcpy(letters,"abc0ef");
+  HelperFunctions::charactersCase(letters);
+  EXPECT_STRNE(letters,"abc0ef\0");
+
+}
+//-----------------------END------------------------
+//---------------------Player------------------------
