@@ -226,6 +226,39 @@ TEST(CastleLinking, LinkRoom6and9) {
 	delete castle;
 }
 
+TEST(CastleLinking, LinkAllRoomsNull) {
+	Castle* castle = new Castle();
+
+	castle->LinkRoomsWithOtherThings(nullptr, nullptr, nullptr);
+
+	EXPECT_EQ(castle->getRoom(1)->getPaths()[2], castle->getRoom(2));
+
+	delete castle;
+}
+
+TEST(CastleLinking, LinkAllRooms) {
+	Castle* castle = new Castle();
+	Item** itemsPtr = new Item*[5];
+	itemsPtr[0] = new Treasure("GOLDEN EGG", 500000);
+	itemsPtr[1] = new Treasure("GOLDEN CHALICE", 500000);
+	itemsPtr[2] = new Treasure("PROOF", 1000000);
+	itemsPtr[3] = new Weapon("SHIELD");
+	itemsPtr[4] = new Weapon("DAGGER");
+	Monster** monstersPtr = new Monster*[5];
+	monstersPtr[0] = new Monster("MEDUSA", itemsPtr[3]);
+	monstersPtr[1] = new Monster("DRACULA", itemsPtr[4]);
+	Princess* princessPtr = new Princess;
+
+	castle->LinkRoomsWithOtherThings(itemsPtr, monstersPtr, princessPtr);
+
+	EXPECT_EQ(castle->getRoom(1)->getPaths()[2], castle->getRoom(2));
+
+	delete castle;
+	delete [] itemsPtr;
+	delete [] monstersPtr;
+	delete princessPtr;
+}
+
 TEST(CastleGetSet, roomNumbers) {
 	Castle* castle = new Castle();
 
@@ -238,12 +271,16 @@ TEST(CastleGetSet, roomNumbers) {
 	delete castle;
 }
 
-TEST(CastleLinking, LinkRoomsWithOtherThings) {
+TEST(CastleGetSet, getRooms) {
 	Castle* castle = new Castle();
 
-	castle->LinkRoomsWithOtherThings(nullptr, nullptr, nullptr);
+	castle->setNumbersofRooms();
 
-	EXPECT_EQ(castle->getRoom(1)->getPaths()[2], castle->getRoom(2));
+	for (int ii = 1; ii < 10; ++ii) {
+		EXPECT_EQ(castle->getRoom(ii)->getRoomNumber(), ii);
+	}
+
+	EXPECT_EQ(castle->getRoom(100)->getItemsPresent(), nullptr);
 
 	delete castle;
 }
