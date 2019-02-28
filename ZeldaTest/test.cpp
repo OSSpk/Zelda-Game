@@ -286,6 +286,7 @@ TEST(HelperFunctions,caseTest){
 
 //---------------------Room------------------------
 
+/* Should return the integer enumeration for cardinal direcions*/
 TEST(RoomDirectionIndex, Capital) {
 	Room* room = new Room();
 
@@ -302,6 +303,7 @@ TEST(RoomDirectionIndex, Capital) {
 	delete room;
 }
 
+/* Should return the integer enumeration for cardinal direcions*/
 TEST(RoomDirectionIndex, MixedCase) {
 	Room* room = new Room();
 
@@ -313,6 +315,7 @@ TEST(RoomDirectionIndex, MixedCase) {
 	delete room;
 }
 
+/* Should return an error code for the direction index*/
 TEST(RoomDirectionIndex, WrongWords) {
 	Room* room = new Room();
 
@@ -324,6 +327,7 @@ TEST(RoomDirectionIndex, WrongWords) {
 	delete room;
 }
 
+/* Should return an error code for the direction index*/
 TEST(RoomDirectionIndex, SpecialCharacters) {
 	Room* room = new Room();
 
@@ -335,6 +339,7 @@ TEST(RoomDirectionIndex, SpecialCharacters) {
 	delete room;
 }
 
+/* Should return a string representation of the cardinal direction of integers*/
 TEST(RoomDirectionName, IntegerInput) {
 	Room* room = new Room();
 
@@ -346,6 +351,7 @@ TEST(RoomDirectionName, IntegerInput) {
 	delete room;
 }
 
+/*Should return an empty string because the indicated integer is outside of range*/
 TEST(RoomDirectionName, OutsideNormalRange) {
 	Room* room = new Room();
 
@@ -354,6 +360,7 @@ TEST(RoomDirectionName, OutsideNormalRange) {
 	delete room;
 }
 
+/*Should return an empty string because the indicated value is the wrong type*/
 TEST(RoomDirectionName, FloatInput) {
 	Room* room = new Room();
 
@@ -362,6 +369,7 @@ TEST(RoomDirectionName, FloatInput) {
 	delete room;
 }
 
+/*Should set the paths betweens rooms.  If failure, check that the rooms are not given paths initially*/
 TEST(RoomGettersSetters, SurroundingRooms) {
 	Room* room = new Room();
 	Room* room2 = new Room();
@@ -398,6 +406,7 @@ TEST(RoomGettersSetters, SurroundingRooms) {
 	delete room5;
 }
 
+/* Tests a very long description for the room and a typical string length.*/
 TEST(RoomGettersSetters, Description) {
 	Room* room = new Room();
 
@@ -415,6 +424,7 @@ TEST(RoomGettersSetters, Description) {
 	delete room;
 }
 
+/* Tests that the room class can have it's items set and the room filled up.*/
 TEST(RoomGettersSetters, Items) {
 	Room* room = new Room();
 	Item* weapon = new Weapon("weaponWEAPON");
@@ -445,6 +455,7 @@ TEST(RoomGettersSetters, Items) {
 	delete treasure;
 }
 
+/* Tests that the room can have its princess and monster set.  Checks that their names are correct.  */
 TEST(RoomGettersSetters, PrincessMonster) {
 	Room* room = new Room();
 	Item* weapon = new Weapon("weaponWEAPON");
@@ -463,7 +474,7 @@ TEST(RoomGettersSetters, PrincessMonster) {
 	delete princess;
 }
 
-
+/* Checks that the room number can be successfully set and retrieved.*/
 TEST(RoomGettersSetters, RoomNumber) {
 	Room* room = new Room();
 
@@ -482,6 +493,7 @@ TEST(RoomGettersSetters, RoomNumber) {
 
 //---------------------Castle------------------------
 
+/* Tests if the castle can link rooms 5 and 8 by adding eachother as paths. */
 TEST(CastleLinking, LinkRoom5and8) {
 	Castle* castle = new Castle();
 
@@ -510,6 +522,7 @@ TEST(CastleLinking, LinkRoom5and8) {
 	delete castle;
 }
 
+/* Tests if the castle can link rooms 6 and 9 by adding eachother as paths. */
 TEST(CastleLinking, LinkRoom6and9) {
 	Castle* castle = new Castle();
 
@@ -533,6 +546,7 @@ TEST(CastleLinking, LinkRoom6and9) {
 	delete castle;
 }
 
+/* Tests if the castle can run its setup function with null input. */
 TEST(CastleLinking, LinkAllRoomsNull) {
 	Castle* castle = new Castle();
 
@@ -543,6 +557,7 @@ TEST(CastleLinking, LinkAllRoomsNull) {
 	delete castle;
 }
 
+/* Tests if the castle can run its setup function with full input. */
 TEST(CastleLinking, LinkAllRooms) {
 	Castle* castle = new Castle();
 	Item** itemsPtr = new Item*[5];
@@ -566,6 +581,7 @@ TEST(CastleLinking, LinkAllRooms) {
 	delete princessPtr;
 }
 
+/* Tests that the castle can set room numbers for all of its rooms. */
 TEST(CastleGetSet, roomNumbers) {
 	Castle* castle = new Castle();
 
@@ -578,6 +594,7 @@ TEST(CastleGetSet, roomNumbers) {
 	delete castle;
 }
 
+/* Tests the get room function by getting a room outside of the range. */
 TEST(CastleGetSet, getRooms100) {
 	Castle* castle = new Castle();
 
@@ -588,7 +605,7 @@ TEST(CastleGetSet, getRooms100) {
 	delete castle;
 }
 
-
+/* Tests the get room function by getting a room of negative index. */
 TEST(CastleGetSet, getRoomsNegative) {
 	Castle* castle = new Castle();
 
@@ -599,6 +616,7 @@ TEST(CastleGetSet, getRoomsNegative) {
 	delete castle;
 }
 
+/* Tests the get room function by getting rooms in the indices [1, 10] */
 TEST(CastleGetSet, getRooms1Through10) {
 	Castle* castle = new Castle();
 
