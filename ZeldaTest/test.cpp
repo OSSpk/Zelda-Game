@@ -36,6 +36,28 @@ TEST(RoomDirectionIndex, MixedCase) {
 	delete room;
 }
 
+TEST(RoomDirectionIndex, WrongWords) {
+	Room* room = new Room();
+
+	EXPECT_EQ(0, room->directionIndex("lkafsjlkdsajflsafd"));
+	EXPECT_EQ(0, room->directionIndex("ioewuroijsafjkhsdkjfahs"));
+	EXPECT_EQ(0, room->directionIndex("sjdkafhkjsn,nvxzc,mcnkds"));
+	EXPECT_EQ(0, room->directionIndex("huiuysiafhsdakjfhdakj"));
+
+	delete room;
+}
+
+TEST(RoomDirectionIndex, SpecialCharacters) {
+	Room* room = new Room();
+
+	EXPECT_EQ(0, room->directionIndex("%*(#&%(*#&%*(#$@&%$"));
+	EXPECT_EQ(0, room->directionIndex("98375@(*#%&*(&@#$*(%3"));
+	EXPECT_EQ(0, room->directionIndex("(*#&%(*#$%&(*#&#$%*(#$,n"));
+	EXPECT_EQ(0, room->directionIndex("*&(#*%&#*(%&#$*(%#$&%#(*"));
+
+	delete room;
+}
+
 TEST(RoomDirectionName, IntegerInput) {
 	Room* room = new Room();
 
@@ -51,6 +73,14 @@ TEST(RoomDirectionName, OutsideNormalRange) {
 	Room* room = new Room();
 
 	EXPECT_STREQ("", room->directionName(4));
+
+	delete room;
+}
+
+TEST(RoomDirectionName, FloatInput) {
+	Room* room = new Room();
+
+	EXPECT_STREQ("", room->directionName(4.0));
 
 	delete room;
 }
@@ -271,7 +301,28 @@ TEST(CastleGetSet, roomNumbers) {
 	delete castle;
 }
 
-TEST(CastleGetSet, getRooms) {
+TEST(CastleGetSet, getRooms100) {
+	Castle* castle = new Castle();
+
+	castle->setNumbersofRooms();
+
+	EXPECT_EQ(castle->getRoom(100)->getItemsPresent(), nullptr);
+
+	delete castle;
+}
+
+
+TEST(CastleGetSet, getRoomsNegative) {
+	Castle* castle = new Castle();
+
+	castle->setNumbersofRooms();
+
+	EXPECT_EQ(castle->getRoom(-1)->getItemsPresent(), nullptr);
+
+	delete castle;
+}
+
+TEST(CastleGetSet, getRooms1Through10) {
 	Castle* castle = new Castle();
 
 	castle->setNumbersofRooms();
@@ -279,8 +330,6 @@ TEST(CastleGetSet, getRooms) {
 	for (int ii = 1; ii < 10; ++ii) {
 		EXPECT_EQ(castle->getRoom(ii)->getRoomNumber(), ii);
 	}
-
-	EXPECT_EQ(castle->getRoom(100)->getItemsPresent(), nullptr);
 
 	delete castle;
 }
