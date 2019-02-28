@@ -6,9 +6,6 @@ TEST(TestCaseName, TestName) {
   EXPECT_TRUE(true);
 }
 
-#include "pch.h"
-#include "../Zelda/Zelda.cpp"
-
 //---------------------Player------------------------
 
 
