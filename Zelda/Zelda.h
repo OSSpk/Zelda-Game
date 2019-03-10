@@ -147,11 +147,13 @@ public:
 class Room
 {
 private:
-	Room* 		paths[4];
-	Item* 		items_Present[5];
+	static int const numPaths = 4;
+	static int const numItems = 5;
+
+	Room* 		paths[numPaths];
+	Item* 		items_Present[numItems];
 	Monster*    monster_Present;
 	Princess*   princess_Present;
-
 
 	char*		description;
 	int 		roomNumber;
@@ -172,7 +174,7 @@ public:
 
 
 	int					directionIndex(char const*);
-	char* 				directionName(int);
+	char const* 		directionName(int);
 
 	inline void			setEast(Room*);
 	inline void			setWest(Room*);
@@ -196,12 +198,10 @@ public:
 class Castle
 {
 private:
-	Room rooms[9];
+	static int const numRooms = 9;
+	Room rooms[numRooms];
 
 public:
-	Castle();
-	~Castle();
-
 	inline Room* getRoom(int);
 
 	void LinkRoomsWithOtherThings(Item**, Monster**, Princess*);
@@ -211,8 +211,6 @@ public:
 
 	inline void setDescriptionOfRooms();
 	inline void setNumbersofRooms();
-
-
 };
 
 
