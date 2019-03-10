@@ -242,12 +242,12 @@ void Princess::setLivingState(bool currentState)
 
 Room::Room()
 {
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < numPaths; ++i)
 	{
 		paths[i] = nullptr;
 	}
 
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < numItems; ++i)
 	{
 		items_Present[i] = nullptr;
 	}
@@ -263,63 +263,66 @@ Room::Room()
 
 Room::~Room()
 {
-	if(description)
+	if (description) {
 		delete[] description;
+	}
 }
 
 
 
 int Room::directionIndex(char const* direction)
 {
-	int i = 0;
-	if(strcmp(direction , "NORTH") == 0)
-		i = 0;
+	char temp[10];
+	strncpy_s(temp, direction, min(sizeof(temp) - 1, strlen(direction)));
+	temp[sizeof(temp) - 1] = '\0';
+	HelperFunctions::charactersCase(temp);
+	if (strcmp(temp, "NORTH") == 0) {
+		return 0;
+	}
 
-	else if(strcmp (direction, "SOUTH") == 0)
-		i = 1;
+	if (strcmp(temp, "SOUTH") == 0) {
+		return 1;
+	}
 
-	else if(strcmp (direction, "EAST") == 0)
-		i = 2;
+	if (strcmp(temp, "EAST") == 0) {
+		return 2;
+	}
 
-	else if(strcmp (direction, "WEST") == 0)
-		i = 3;
+	if (strcmp(temp, "WEST") == 0) {
+		return 3;
+	}
 
-	return i;
+	return -1;
 }
 
 
 
-char* Room::directionName(int i)
+char const* Room::directionName(int const i)
 {
-	char* buffer = new char [10];
-
-	if( i == 0)
-		strcpy_s(buffer,10, "North");
-
-	else if(i == 1)
-		strcpy_s(buffer,10, "South");
-
-	else if(i == 2)
-		strcpy_s(buffer,10, "East");
-
-	else if(i == 3)
-		strcpy_s(buffer,10, "West");
-
-	return buffer;
+	if (i == 0) {
+		return "North";
+	}
+	if (i == 1) {
+		return "South";
+	}
+	if (i == 2) {
+		return "East";
+	} 
+	if (i == 3) {
+		return "West";
+	}
+	return "";
 }
 
 
 
 bool Room::isRoomFull()
 {
-	for (int i = 0; i < 5; ++i)
-	{
-		if (items_Present[i] == nullptr)
-		{
+	for (int i = 0; i < numItems; ++i) {
+		if (items_Present[i] == nullptr) {
 			return false;
 		}
 	}
-
 	return true;
 }
 
@@ -407,9 +410,11 @@ void Room::setWest(Room* roomNo)
 
 
 
-void Room::setItemsPresent(int itemNo , Item* item)
+void Room::setItemsPresent(int const itemNo, Item* item)
 {
-	items_Present[itemNo] = item;
+	if (itemNo >= 0 && itemNo < numItems) {
+		items_Present[itemNo] = item;
+	}
 }
 
 
@@ -436,7 +441,7 @@ void Room::setDesription(char const* room_Description)
 
 
 
-void Room::setRoomNumber(int roomNo)
+void Room::setRoomNumber(int const roomNo)
 {
 	roomNumber = roomNo;
 }
@@ -446,22 +451,17 @@ void Room::setRoomNumber(int roomNo)
 //---------------------Castle------------------------
 
 
-
-Castle::Castle()
+Room* Castle::getRoom(int const room_No)
 {
-
+	if (room_No <= numRooms && room_No > 0) {
+		return &rooms[room_No - 1];
+	}
+	return nullptr;
 }
 
 
 
-Room* Castle::getRoom( int room_No )
-{
-	return &rooms[room_No - 1];
-}
-
-
-
-void Castle::LinkRoomsWithOtherThings(Item** items , Monster** monsters , Princess* princess)
+void Castle::LinkRoomsWithOtherThings(Item** items, Monster** monsters, Princess* princess)
 {
 	//Room1
 	rooms[0].setSouth(&rooms[3]);
@@ -474,47 +474,62 @@ void Castle::LinkRoomsWithOtherThings(Item** items , Monster** monsters , Prince
 	rooms[1].setEast(&rooms[2]);
 	rooms[1].setSouth(&rooms[4]);
 
-	rooms[1].setItemsPresent(0 , items[0]);
+	if (items) {
+		rooms[1].setItemsPresent(0, items[0]);
+	}
 
 
 	//Room3
 	rooms[2].setWest(&rooms[1]);
-	rooms[2].setItemsPresent(0 , items[3]);
+	if (items) {
+		rooms[2].setItemsPresent(0, items[3]);
+	}
 
 
 	//Room4
 	rooms[3].setNorth(&rooms[0]);
-	rooms[3].setItemsPresent(0 , items[1]);
+	if (items) {
+		rooms[3].setItemsPresent(0, items[1]);
+	}
 
 
 	//Room5
 	rooms[4].setNorth(&rooms[1]);
 	rooms[4].setEast(&rooms[5]);
 
-	rooms[4].setMonsterPresent( monsters[0] );
+	if (monsters) {
+		rooms[4].setMonsterPresent(monsters[0]);
+	}
 
 
 	//Room6
 	rooms[5].setWest(&rooms[4]);
 
-	rooms[5].setMonsterPresent( monsters[1] );
+	if (monsters) {
+		rooms[5].setMonsterPresent(monsters[1]);
+	}
 
 
 	//Room7
 	rooms[6].setEast(&rooms[7]);
-	rooms[6].setItemsPresent(0 , items[4]);
+	if (items) {
+		rooms[6].setItemsPresent(0, items[4]);
+	}
 
 
 	//Room8
 	rooms[7].setWest(&rooms[6]);
 	rooms[7].setNorth(&rooms[4]);
-
-	rooms[7].setItemsPresent(0 , items[2]);
+	if (items) {
+		rooms[7].setItemsPresent(0, items[2]);
+	}
 
 
 	//Room9
 	rooms[8].setNorth(&rooms[5]);
-	rooms[8].setPrincessPresent(princess);
+	if (princess) {
+		rooms[8].setPrincessPresent(princess);
+	}
 }
 
 
@@ -557,14 +572,14 @@ void Castle::setDescriptionOfRooms()
 	{
 		char buffer[300];
 
-		for (int i = 0; i < 9 && !InputStream.eof(); ++i)
+		for (int i = 0; i < numRooms && !InputStream.eof(); ++i)
 		{
-			InputStream.getline(buffer,300);
+			InputStream.getline(buffer, 300);
 			rooms[i].setDesription(buffer);
 		}
-	}
-	else
+	} else {
 		cout << "Could not open file";
+	}
 	InputStream.close();
 }
 
@@ -572,19 +587,11 @@ void Castle::setDescriptionOfRooms()
 
 void Castle::setNumbersofRooms()
 {
-	for (int i = 0; i < 9; ++i)
+	for (int i = 0; i < numRooms; ++i)
 	{
 		rooms[i].setRoomNumber(i+1);
 	}
 }
-
-
-
-Castle::~Castle()
-{
-
-}
-
 
 
 //-------------------Player---------------------
@@ -704,20 +711,25 @@ bool Player::isBagFull()
 
 
 
-bool Player::Move(char const* direction , bool& exit_Castle)
+bool Player::Move(char const* direction, bool& exit_Castle)
 {
 	bool moveSuccessful = false;
 	int i = 0;
 
 	i = current_Room->directionIndex(direction);
 
+	// -1 indicates an error
+	if (i == -1) {
+		HelperFunctions::color(RED);
+		cout << "\nMOVE " << direction << " is an invalid command.";
+		return false;
+	}
+
+
 	if ((i == 3) && ((current_Room->getRoomNumber()) == 1))
 	{
 		exit_Castle = true;
-	}
-
-	else if((current_Room->getPaths())[i] != nullptr)
-	{
+	} else if((current_Room->getPaths())[i] != nullptr) {
 		current_Room   = (current_Room->getPaths())[i];
 		moveSuccessful = true;
 
@@ -731,10 +743,7 @@ bool Player::Move(char const* direction , bool& exit_Castle)
 
 		HelperFunctions::color(RED);
 		cout << "\nYou have successfully been moved to Room : " << current_Room->getRoomNumber();
-	}
-
-	else
-	{
+	} else {
 		HelperFunctions::color(RED);
 		cout << "\nMOVE " << direction <<" is an invalid command.";
 	}

@@ -319,10 +319,10 @@ TEST(RoomDirectionIndex, MixedCase) {
 TEST(RoomDirectionIndex, WrongWords) {
 	Room* room = new Room();
 
-	EXPECT_EQ(0, room->directionIndex("lkafsjlkdsajflsafd"));
-	EXPECT_EQ(0, room->directionIndex("ioewuroijsafjkhsdkjfahs"));
-	EXPECT_EQ(0, room->directionIndex("sjdkafhkjsn,nvxzc,mcnkds"));
-	EXPECT_EQ(0, room->directionIndex("huiuysiafhsdakjfhdakj"));
+	EXPECT_EQ(-1, room->directionIndex("lkafsjlkdsajflsafd"));
+	EXPECT_EQ(-1, room->directionIndex("ioewuroijsafjkhsdkjfahs"));
+	EXPECT_EQ(-1, room->directionIndex("sjdkafhkjsn,nvxzc,mcnkds"));
+	EXPECT_EQ(-1, room->directionIndex("huiuysiafhsdakjfhdakj"));
 
 	delete room;
 }
@@ -331,10 +331,10 @@ TEST(RoomDirectionIndex, WrongWords) {
 TEST(RoomDirectionIndex, SpecialCharacters) {
 	Room* room = new Room();
 
-	EXPECT_EQ(0, room->directionIndex("%*(#&%(*#&%*(#$@&%$"));
-	EXPECT_EQ(0, room->directionIndex("98375@(*#%&*(&@#$*(%3"));
-	EXPECT_EQ(0, room->directionIndex("(*#&%(*#$%&(*#&#$%*(#$,n"));
-	EXPECT_EQ(0, room->directionIndex("*&(#*%&#*(%&#$*(%#$&%#(*"));
+	EXPECT_EQ(-1, room->directionIndex("%*(#&%(*#&%*(#$@&%$"));
+	EXPECT_EQ(-1, room->directionIndex("98375@(*#%&*(&@#$*(%3"));
+	EXPECT_EQ(-1, room->directionIndex("(*#&%(*#$%&(*#&#$%*(#$,n"));
+	EXPECT_EQ(-1, room->directionIndex("*&(#*%&#*(%&#$*(%#$&%#(*"));
 
 	delete room;
 }
@@ -446,7 +446,7 @@ TEST(RoomGettersSetters, Items) {
 	EXPECT_EQ(weapon, items[2]);
 	EXPECT_EQ(treasure, items[3]);
 	EXPECT_EQ(weapon, items[4]);
-	EXPECT_EQ(treasure, items[5000]);
+	//EXPECT_EQ(treasure, items[5000]);
 
 	EXPECT_EQ(true, room->isRoomFull());
 
@@ -600,7 +600,7 @@ TEST(CastleGetSet, getRooms100) {
 
 	castle->setNumbersofRooms();
 
-	EXPECT_EQ(castle->getRoom(100)->getItemsPresent(), nullptr);
+	EXPECT_EQ(castle->getRoom(100), nullptr);
 
 	delete castle;
 }
@@ -611,7 +611,7 @@ TEST(CastleGetSet, getRoomsNegative) {
 
 	castle->setNumbersofRooms();
 
-	EXPECT_EQ(castle->getRoom(-1)->getItemsPresent(), nullptr);
+	EXPECT_EQ(castle->getRoom(-1), nullptr);
 
 	delete castle;
 }
