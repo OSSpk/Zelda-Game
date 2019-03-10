@@ -211,6 +211,7 @@ char* Monster::getMonsterName()
 Princess::Princess()
 {
 	is_Alive = true;
+	along=false;
 }
 
 
@@ -220,14 +221,23 @@ Princess::~Princess()
 
 }
 
+bool Princess::getAlongState()
+{
+	return along;
+}
+
+
+
+void Princess::setAlongState(bool currentAlong)
+{
+	along = currentAlong;
+}
 
 
 bool Princess::getLivingState()
 {
 	return is_Alive;
 }
-
-
 
 void Princess::setLivingState(bool currentState)
 {
@@ -926,8 +936,10 @@ void Player::Look()
 	}
 
 	HelperFunctions::color(PURPLE);
-	if(princess_Pointer)
+	if(princess_Pointer){
 		cout << " You have Princess along with you .";
+		princess_Pointer->setAlongState(true);
+	}
 
 	HelperFunctions::color(GREEN);
 	cout << "\nYour bag contains the following items : ";
@@ -1242,7 +1254,7 @@ void Game::Play()
 	}
 	while (playerPtr->getCurrentState() && !exit_Castle && (strcmp (functionName , "EXIT") != 0));
 	cout<<"You finished the game in "<<round<<"rounds!"<<endl;
-	if(princessPtr->getLivingState()==true){//only player rescue princess successfully, he will use the cash and have extra endings
+	if(princessPtr->getAlongState()==true){//only player rescue princess successfully, he will use the cash and have extra endings
 		Ending();
 	}
 }
