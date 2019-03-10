@@ -286,4 +286,5 @@ public:
 	void	 displayStory();
 	void	 PlayerDead();
 	void	 gameCheck();
+	void 	 Ending();
 };

@@ -956,9 +956,9 @@ void Player::Exit()
 Game::Game()
 {
 	//Creating Items for the Game
-	itemsPtr[0] = new Treasure ("GOLDEN EGG" 	, 500000);
-	itemsPtr[1] = new Treasure ("GOLDEN CHALICE" , 500000);
-	itemsPtr[2] = new Treasure ("PROOF" , 1000000);
+	itemsPtr[0] = new Treasure ("GOLDEN EGG" 	, 500);
+	itemsPtr[1] = new Treasure ("GOLDEN CHALICE" , 500);
+	itemsPtr[2] = new Treasure ("PROOF" , 1000);
 	itemsPtr[3] = new Weapon   ("SHIELD");
 	itemsPtr[4] = new Weapon   ("DAGGER");
 
@@ -1110,7 +1110,20 @@ void Game::gameCheck()
 	}
 }
 
+void Game::Ending(){
+	int cash= playerPtr ->getCash();
+	cout<<"You have "<<cash<<" Gold!"<<endl;
+	if(cash>=2000){
+		cout<<"WOW!You collected all the treasure in castle and you are so rich now! You married with Princess and set up a kingdom with her in Europe!"<<endl;
+	}
+	else if(cash>=500){
+		cout<<"You collect some treasure but not all of them. You brought Princess back to hometown. You sold your weapon, aramor and treasure. You enjoyed the rest of your life with Pirncess as a oridiany man"<<endl;
+	}
+	else{
+		cout<<"You did not bring any treasure out of the castle. You cannot pay for the Ship ticket back to your home. Instead, you sneak into a random ship with princess. However,the destination of this ship is the Wonderland North Koera. You spent the rest of your life as a labor"<<endl;
+	}
 
+}
 
 
 void Game::Play()
@@ -1130,7 +1143,7 @@ void Game::Play()
 	char functionName[30];
 	bool exit_Castle = false;
 	playerPtr->Look();
-
+	int round=1;//keep tracking the round
 	do
 	{
 		HelperFunctions::color(YELLOW);
@@ -1161,6 +1174,23 @@ void Game::Play()
 
 		if ( strcmp(functionName,	 "MOVE") == 0)
 		{
+			while(round==1 && strcmp(command,"WEST")==0){//make sure user does not move west and quit game at first round
+				int choice;
+				cout<<"Are you sure you want to move west and quit this game?(1.Yes 2.No)"<<endl;
+				cin>>choice;
+				cin.ignore(256,'\n');
+				cin.clear();
+				if(choice==1){
+					break;
+				}
+				else{
+					cout<<"Please input direction again(South,East)"<<endl;//ask user to input direction again
+					cin>>command;
+					cin.ignore(256,'\n');
+					cin.clear();
+					HelperFunctions::charactersCase(command);
+				}
+			}
 			if (playerPtr-> Move(command , exit_Castle))
 				playerPtr->Look();
 
@@ -1169,7 +1199,6 @@ void Game::Play()
 					gameCheck();
 			}
 		}
-
 
 		else if ( strcmp(functionName,	 "PICK") == 0)
 			playerPtr->Pick(command);
@@ -1200,6 +1229,11 @@ void Game::Play()
 			HelperFunctions::color(RED);
 			cout << "\nINVALID COMMAND . Please enter a Valid Command .";
 		}
+		round++;//increase the round number
 	}
 	while (playerPtr->getCurrentState() && !exit_Castle && (strcmp (functionName , "EXIT") != 0));
+	cout<<"You finished the game in "<<round<<"rounds!"<<endl;
+	if(princessPtr->getLivingState()==true){//only player rescue princess successfully, he will use the cash and have extra endings
+		Ending();
+	}
 }
