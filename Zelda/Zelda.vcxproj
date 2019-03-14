@@ -167,18 +167,36 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Castle.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="HelperFunctions.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Monster.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Zelda.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Princess.h" />
+    <ClInclude Include="Room.h" />
+    <ClInclude Include="Treasure.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Castle.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="HelperFunctions.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Zelda.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Princess.cpp" />
+    <ClCompile Include="Room.cpp" />
+    <ClCompile Include="Treasure.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="EndDead.txt" />
