@@ -1,5 +1,15 @@
 #include "pch.h"
-#include "../Zelda/Zelda.cpp"
+
+#include "../Zelda/HelperFunctions.cpp"
+#include "../Zelda/Item.cpp"
+#include "../Zelda/Treasure.cpp"
+#include "../Zelda/Weapon.cpp" 
+#include "../Zelda/Monster.cpp"
+#include "../Zelda/Princess.cpp"
+#include "../Zelda/Room.cpp"
+#include "../Zelda/Castle.cpp"
+#include "../Zelda/Player.cpp"
+#include "../Zelda/Game.cpp"
 
 TEST(TestCaseName, TestName) {
   EXPECT_EQ(1, 1);
