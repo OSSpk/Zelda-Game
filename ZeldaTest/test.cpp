@@ -103,7 +103,7 @@ TEST(PlayerAttackMechanic,PlayerAttackWithWeaponAndMonster) {
   Room * room = new Room();
   Weapon * dummyWeapon = new Weapon("paradox");
   Player * playa = new Player("Steve", room );
-  Monster * dummy = new Monster("Steves mom",dummyWeapon);
+  Monster * dummy = new Monster("Steve's mom",dummyWeapon);
   room->setItemsPresent(0,dummyWeapon);
   playa->Pick("paradox");
 
@@ -126,7 +126,7 @@ TEST(PlayerAttackMechanic,PlayerAttackTwiceWithWeaponAndMonster) {
   Room * room = new Room();
   Weapon * dummyWeapon = new Weapon("paradox");
   Player * playa = new Player("Steve", room );
-  Monster * dummy = new Monster("Steves mom",dummyWeapon);
+  Monster * dummy = new Monster("Steve's mom",dummyWeapon);
   room->setItemsPresent(0,dummyWeapon);
   playa->Pick("paradox");
   room->setMonsterPresent(dummy);
@@ -751,7 +751,7 @@ TEST(TreasureCreation, NoInput) {
 TEST(TreasureCreation, WhiteSpace) {
 	Treasure* treasure = new Treasure("		", 0);
 
-	EXPECT_STREQ("	", treasure->getItemName());
+	EXPECT_STREQ("		", treasure->getItemName());
 
 	delete treasure;
 }
@@ -783,7 +783,7 @@ TEST(TreasureCreation, HugeWorth) {
 TEST(TreasureCreation, FractionalWorth) {
 	Treasure* treasure = new Treasure("The Holy Grail", 0.5);
 
-	EXPECT_EQ(0.5, treasure->getWorth());
+	EXPECT_EQ(0.0, treasure->getWorth());
 
 	delete treasure;
 }

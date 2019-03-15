@@ -264,7 +264,7 @@ bool Player::Attack(char const* monsterName)
 {
 	bool killed = false;
 
-	if (current_Room->getMonsterPresent() != nullptr)
+	if (current_Room->getMonsterPresent() != nullptr && strcmp(monsterName, current_Room->getMonsterPresent()->getMonsterName()) == 0)
 	{
 		if (((current_Room->getMonsterPresent())->getLivingState()) == true)
 		{
