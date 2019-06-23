@@ -1,3 +1,6 @@
+#include "pch.h"
+#include "Zelda.h"
+
 #include <iostream>
 #include <windows.h>
 #include <cstdlib>
@@ -13,305 +16,6 @@ const int AQUA = 11;
 const int YELLOW = 14;
 const int WHITE = 15;
 const int BLUE = 9;
-
-
-
-//---------------------Classes------------------------
-class HelperFunctions;
-class Item;
-class Treasure;
-class Weapon;
-class Monster;
-class Princess;
-class Player;
-class Room;
-class Castle;
-class Game;
-
-
-
-
-//---------------------Definitions------------------------
-
-
-
-
-
-//---------------------Helper Functions------------------------
-class HelperFunctions
-{
-private:
-
-public:
-
-	//Converts all the characters of Input to UpperCase
-	static void	charactersCase(char*);
-	static void color(int);
-};
-
-
-
-
-
-//------------------------Item----------------------------------
-class Item
-{
-protected:
-
-	char* name;
-
-public:
-
-	Item();
-	~Item();
-
-	inline char* getItemName();
-	inline virtual int getWorth() = 0;
-
-
-};
-
-
-
-
-
-//------------------------Treasure--------------------------------
-class Treasure : public Item
-{
-private:
-	int worth;
-
-public:
-
-	Treasure();
-	~Treasure();
-	Treasure(char* , int);
-
-	inline int	getWorth();
-
-};
-
-
-
-
-
-//----------------------Weapon---------------------------------------
- class Weapon : public Item
- {
- private:
-
- public:
-
- 	Weapon();
- 	~Weapon();
- 	Weapon(char*);
-
- 	inline int getWorth();
-
- };
-
-
-
-
-
-//-----------------------Monster---------------------------------------
-class Monster
-{
-private:
-	char* name;
-	bool  is_Alive;
-	Item* killing_weapon;
-
-
-public:
-
-	Monster();
-	~Monster();
-	Monster(char* , Item*);
-
-	inline Item* 	getKillingWeapon();
-	inline void		setKillingWeapon(Item*);
-	inline bool		getLivingState();
-	inline void		setLivingState(bool);
-	inline char*	getMonsterName();
-
-};
-
-
-
-
-
-//---------------------Princess-------------------------------------
-class Princess
-{
-private:
-	bool is_Alive;
-
-public:
-	Princess();
-	~Princess();
-
-	inline bool	 getLivingState();
-	inline void	 setLivingState(bool);
-};
-
-
-
-
-
-//-----------------------Room------------------------------------------
-class Room
-{
-private:
-	Room* 		paths[4];
-	Item* 		items_Present[5];
-	Monster*    monster_Present;
-	Princess*   princess_Present;
-
-
-	char*		description;
-	int 		roomNumber;
-
-
-public:
-	Room();
-	~Room();
-
-	inline Room** 		getPaths();
-	inline Item**		getItemsPresent();
-	inline Monster*		getMonsterPresent();
-	inline Princess*	getPrincessPresent();
-	inline char*		getDescription();
-	inline int 			getRoomNumber();
-
-	bool				isRoomFull();
-
-
-	int					directionIndex(char*);
-	char* 				directionName(int);
-
-	inline void			setEast(Room*);
-	inline void			setWest(Room*);
-	inline void			setSouth(Room*);
-	inline void			setNorth(Room*);
-
-	inline void			setMonsterPresent(Monster*);
-	inline void			setItemsPresent(int , Item*);
-	inline void			setPrincessPresent(Princess*);
-	inline void			setDesription(char*);
-	inline void			setRoomNumber(int);
-
-
-};
-
-
-
-
-
-//----------------Castle--------------------------------------
-class Castle
-{
-private:
-	Room rooms[9];
-
-public:
-	Castle();
-	~Castle();
-
-	inline Room* getRoom(int);
-
-	void LinkRoomsWithOtherThings(Item** , Monster** , Princess*);
-	void HiddenRoomsUnlocker(char* , Monster**);
-	void LinkRoom5and8();
-	void LinkRoom6and9();
-
-	inline void setDescriptionOfRooms();
-	inline void setNumbersofRooms();
-
-
-};
-
-
-
-
-
-//----------------------------Player------------------------------
-class Player
-{
-
-private:
-	char* 		name;
-	Princess* 	princess_Pointer;
-	Item* 		bag[10];
-	Room* 		current_Room;
-
-	bool is_Alive;
-	int  cash;
-
-	//Utility Functions
-
-	bool isBagEmpty();
-	bool isBagFull();
-
-public:
-
-	Player();
-	~Player();
-	Player(char* , Room* );
-
-	inline bool 	getCurrentState();
-	inline void 	setCurrentState(bool);
-
-	inline Princess* getPrincess_Pointer();
-
-	void 			CashUpdater();
-	inline int  	getCash();
-	inline char*	getPlayerName();
-
-	bool			Move(char* , bool&);
-	void			Pick(char*);
-	void			Drop(char*);
-	void			Look();
-	bool			Attack(char*);
-	void			Exit();
-
-
-};
-
-
-
-
-
-//--------------------------Game-------------------------------
-class Game
-{
-private:
-	Castle* 	castlePtr;
-	Item*		itemsPtr[5];
-	Princess*	princessPtr;
-	Monster* 	monstersPtr[2];
-	Player*		playerPtr;
-
-
-public:
-
-	Game();
-	~Game();
-
-	void	 Play();
-	void	 displayStory();
-	void	 PlayerDead();
-	void	 gameCheck();
-};
-
-
-
-
-
-//---------------------Implementations------------------------
-
-
-
 
 
 //---------------------Helper Functions------------------------
@@ -383,7 +87,7 @@ Treasure::~Treasure()
 
 
 
-Treasure::Treasure(char* treasure_Name , int treasure_Worth)
+Treasure::Treasure(char const* treasure_Name , int treasure_Worth)
 {
 	name = new char [strlen (treasure_Name) + 1];
 	strcpy_s(name,strlen (treasure_Name) + 1, treasure_Name);
@@ -418,7 +122,7 @@ Weapon::~Weapon()
 
 
 
-Weapon::Weapon(char* weapon_Name)
+Weapon::Weapon(char const* weapon_Name)
 {
 	name = new char [strlen (weapon_Name) + 1];
 	strcpy_s (name, strlen (weapon_Name) + 1, weapon_Name);
@@ -454,7 +158,7 @@ Monster::~Monster()
 
 
 
-Monster::Monster(char* monster_Name, Item* weapon)
+Monster::Monster(char const* monster_Name, Item* weapon)
 {
 	name = new char [strlen(monster_Name) + 1];
 	strcpy_s (name,strlen (monster_Name) + 1, monster_Name);
@@ -565,7 +269,7 @@ Room::~Room()
 
 
 
-int Room::directionIndex(char* direction)
+int Room::directionIndex(char const* direction)
 {
 	int i = 0;
 	if(strcmp(direction , "NORTH") == 0)
@@ -724,7 +428,7 @@ void Room::setPrincessPresent(Princess* princess)
 
 
 
-void Room::setDesription(char* room_Description)
+void Room::setDesription(char const* room_Description)
 {
 	description = new char [strlen(room_Description)+1];
 	strcpy_s(description,strlen(room_Description)+1,room_Description);
@@ -831,7 +535,7 @@ void Castle::LinkRoom6and9()
 
 
 
-void Castle::HiddenRoomsUnlocker(char* monsterName , Monster** monsters)
+void Castle::HiddenRoomsUnlocker(char const* monsterName , Monster** monsters)
 {
 	if (strcmp(monsterName , (monsters[0]->getMonsterName())) == 0)
 	{
@@ -887,7 +591,7 @@ Castle::~Castle()
 
 
 
-Player::Player(char* player_Name , Room* room1 )
+Player::Player(char const* player_Name , Room* room1 )
 {
 	name = new char [strlen(player_Name) + 1];
 	strcpy_s (name,strlen(player_Name) + 1, player_Name);
@@ -1000,7 +704,7 @@ bool Player::isBagFull()
 
 
 
-bool Player::Move(char* direction , bool& exit_Castle)
+bool Player::Move(char const* direction , bool& exit_Castle)
 {
 	bool moveSuccessful = false;
 	int i = 0;
@@ -1044,7 +748,7 @@ bool Player::Move(char* direction , bool& exit_Castle)
 
 
 
-void Player::Pick(char* itemName)
+void Player::Pick(char const* itemName)
 {
 	bool picked = false;
 	bool itemFound = false;
@@ -1090,7 +794,7 @@ void Player::Pick(char* itemName)
 
 
 
-void Player::Drop(char* itemName)
+void Player::Drop(char const* itemName)
 {
 	bool dropped = false;
 	bool item_in_bag = false;
@@ -1142,7 +846,7 @@ void Player::Drop(char* itemName)
 
 
 
-bool Player::Attack(char* monsterName)
+bool Player::Attack(char const* monsterName)
 {
 	bool killed = false;
 
@@ -1498,31 +1202,4 @@ void Game::Play()
 		}
 	}
 	while (playerPtr->getCurrentState() && !exit_Castle && (strcmp (functionName , "EXIT") != 0));
-}
-
-//-------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//------------------------------------------------------------------------------------------
-void main()
-{
-	Game* zelda = new Game;
-	zelda->Play();
-	delete zelda;
-
-	system("PAUSE");
 }
